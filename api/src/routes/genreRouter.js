@@ -5,6 +5,6 @@ const postGenre = require('../handlers/genresHandlers/postGenre');
 const genreRouter = Router();
 
 genreRouter.get('/', getGenres);
-genreRouter.post('/', postGenre);
+// genreRouter.post('/', postGenre);
 
 module.exports = genreRouter;
