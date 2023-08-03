@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL(2, 1),
       validate: {
         min: 0,
-        max: 5
+        max: 10
       }
     }
   },
