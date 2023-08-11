@@ -17,21 +17,35 @@ class videogamesService {
         try {
             const { data } = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
 
-            const videogames = data.results.map(({ id, name, background_image, rating }) => {
+            const videogames = data.results.map(({ id, name, background_image, genres}) => {
+
+                const genresArray = genres.map(genre => {
+                    return {
+                        name: genre.name
+                    }
+                })
                 return {
                     id,
                     name,
                     image: background_image,
-                    rating
+                    genresArray
                 };
             });
 
             const dbVideogames = await Videogame.findAll({
-                attributes: ['id', 'name', 'image', 'rating']
+                attributes: ['id', 'name', 'image'],
+                include: {
+                    model: Genre,
+                    attributes: ['name'],
+// Arreglar para que el array de generos se muestre igual si es de la base de datos o la api
+                    through: {
+                        attributes: []
+                    }
+                }
             });
             return videogames.concat(dbVideogames);
         } catch (error) {
-            throw new Error('Problemas con el servidor')
+            throw new Error(error.message)
         } 
     };
 
@@ -48,6 +62,7 @@ class videogamesService {
             })
 
             const videogameDetail = {
+                id: data.id,
                 name: data.name,
                 description: data.description,
                 platforms,
