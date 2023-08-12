@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from "react";
 import validation from './validation';
 import Genres from './genres';
+import { NavLink } from 'react-router-dom';
 
 const Form = () => {
 
@@ -133,6 +134,7 @@ const Form = () => {
                 
 
             </form>
+            <button><NavLink to='/home'>VOLVER</NavLink></button>
         </div>
     )
 };

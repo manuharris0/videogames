@@ -6,7 +6,7 @@ export const Landing = () => {
 
     useEffect(() => {
         axios.get('http://localhost:3001/genres')
-            .then()
+            .then(response => response.data)
             .catch(error => console.log(error))
     })
     

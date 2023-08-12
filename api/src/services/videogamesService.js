@@ -104,7 +104,8 @@ class videogamesService {
                     [Op.iLike]: `%${name}%`
                 }
             },
-            attributes: ['id', 'name', 'image', 'rating']
+            attributes: ['id', 'name', 'image']
+            // Falta tarer los géneros desde la bdd
         });
 
         videogames.map(game => matchedVideogames.push(game));
@@ -116,11 +117,11 @@ class videogamesService {
                     id: game.id,
                     name: game.name,
                     image: game.background_image,
-                    rating: game.rating
+                    genres: game.genres
                 }
             ))
 
-            if (matchedVideogames.length === 0) throw new Error(`No se econtró videojuego que contenga '${name}' em su nombre`) 
+            if (matchedVideogames.length === 0) throw new Error(`parece que no encontramos el videojuego que buscabas`) 
             matchedVideogames.splice(15)
             return(matchedVideogames);
         } catch (error) {

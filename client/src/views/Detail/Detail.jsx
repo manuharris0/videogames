@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { NavLink } from 'react-router-dom'
 
 import axios from "axios";
 
@@ -57,6 +58,8 @@ const Detail = () => {
                     })
                 }
             </ul>
+
+            <button><NavLink to='/home'>Volver</NavLink></button>
         </div>
     )
 };
