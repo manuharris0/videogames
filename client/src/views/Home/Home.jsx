@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { getVideogames, getVideogameByName, filterByOrigin, orderByName, orderByRating, filterByGenre } from '../../redux/actions';
-
 import { CardsContainer } from "../../components/CardsContainer/CardsContainer";
-
-import styles from './Home.module.css'
+import styles from './Home.module.css';
 
 export const Home = () => {
 
@@ -19,7 +16,7 @@ export const Home = () => {
         dispatch(getVideogames());
     }, [dispatch]);
     
-    if(videogames.length < 1) return <img className={styles.loadingImg} src="/loading.gif" alt="loading..." />
+    if(videogames.length < 1) return <img className={styles.loadingImg} src='https://thumbs.gfycat.com/LittleBestAmoeba-size_restricted.gif' alt="loading..." />
 
     const handleChange = (event) => {
         setName(event.target.value)
@@ -43,24 +40,28 @@ export const Home = () => {
     };
 
     return(
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input type="text"
-                    placeholder="Buscar por nombre"
-                    value={name}
-                    onChange={handleChange}
-                />
-                <input type="submit" value='BUSCAR' />
-            </form>
+        <div className={styles.container}>
 
-            <CardsContainer />
-            <div>
-                <span>Ordenar por:</span>
+            <header>
+                <form onSubmit={handleSubmit}>
+                    <input type="text"
+                        placeholder="Buscar por nombre"
+                        value={name}
+                        onChange={handleChange}
+                    />
+                    <input type="submit" value='BUSCAR' />
+                </form>
+            </header>
+
+            <div className={styles.filters}>
+
+                <span>Ordenar por: </span>
                 <select onChange={handleOrderByRating}>
                     <option value='N'>Rating:</option>
                     <option value='A'>ASCENDENTE</option>
                     <option value='D'>DESCENDENTE</option>
                 </select>
+
                 <select onChange={handleOrderByName}>
                     <option value="N">Nombre:</option>
                     <option value='A'>ASCENDENTE</option>
@@ -87,6 +88,8 @@ export const Home = () => {
                 </select>
                 {/* Solo falta mensaje adecuado cuando el filtro no encuentra coincidencias */}
             </div>
+            <CardsContainer />
+
         </div>
     )
 };

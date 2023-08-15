@@ -1,0 +1,30 @@
+.container {
+    /* ajuste de tamaño */
+    width: 100vx;
+    height: 100vh;
+    /* Ajuste de elementos hijos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Imagen de fondo */
+    background-image: url(https://cdn.wallpapersafari.com/83/79/dVL8SI.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;   
+}
+.title {
+    margin-bottom: 20px;
+    color: whitesmoke;
+}
+.buttonLink {
+    text-align: center;
+}
+.button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8%;
+}

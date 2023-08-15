@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { getGenres } from '../../redux/actions';
+import styles from './Landing.module.css';
 
 export const Landing = () => {
     
@@ -21,10 +22,11 @@ export const Landing = () => {
     }, [dispatch])
     
     return(
-        <div>
-            <Link to='/home'>
-                <button>ENTRAR</button>
-            </Link>
+        <div className={styles.container}>
+            <h1 className={styles.title}>VideoJuegos</h1>    
+            <NavLink to='/home' className={styles.buttonLink}>
+                <button className={styles.button}>ENTRAR</button>
+            </NavLink>
         </div>
     )
 };

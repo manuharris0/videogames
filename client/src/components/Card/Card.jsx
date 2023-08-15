@@ -1,22 +1,23 @@
 import { NavLink } from 'react-router-dom';
-import styles from './Card.module.css';
+import styles from './Card.module.css'
 
-export const Card = ({ image, name, genres, id}) => {
+const Card = ({ image, name, genres, id}) => {
     return(
-        <div className={styles.container}>
-            <NavLink to={`/detail/${id}`}>
-                <img src={image} alt={name} className={styles.img}/>
-                <h3>{name}</h3>
-                <ul>
-                    {
-                        genres?.map((genre, index) => {
-                            return(
-                                <li key={index}>{genre.name}</li>
-                            )
-                        })
-                    }
-                </ul>
-            </NavLink>
-        </div>
+            <div className={styles.card}>
+                <NavLink to={`/detail/${id}`} className={styles.cardLink}>
+                    <img className={styles.cardImage} src={image} alt={name}/>
+                    <h3 className={styles.cardTitle}>{name}</h3>
+                    <ul className={styles.cardGenres}>
+                        {
+                            genres?.map((genre, index) => {
+                                return(
+                                    <li key={index} className={styles.cardGenre}>{genre.name}</li>
+                                )
+                            })
+                        }
+                    </ul>
+                </NavLink>
+            </div>
     )
 };
+export default Card;

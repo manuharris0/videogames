@@ -1,10 +1,8 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { NavLink } from 'react-router-dom'
-//? import { cleanDetail } from '../../redux/actions'
-import axios from "axios";
 import styles from './Detail.module.css';
-
 
 const Detail = () => {
 
@@ -26,21 +24,20 @@ const Detail = () => {
 
     useEffect(() => {
         bringGame();
-    //? Por si cambia el dispatch del detail
-        // return () => {
-        //     dispatch(cleanDetail())
-        // }
     })
 
     if(loading === true) return <img src="/loading.gif" alt="loading..." />
 
     return(
         <div className={styles.container}>
-            <span>{game.id}</span>
-            <h2>{game.name}</h2>
+
+            <span className={styles.id}>{game.id}</span>
+
+            <h2 className={styles.title}>{game.name}</h2>
+            
             <img src={game.image} alt={game.name} className={styles.img}/>
 
-            <ul>
+            <ul className={styles.platforms}>
                 <h4>Plataformas:</h4>
                 {
                     game.platforms.map((platform, index) => {
@@ -50,19 +47,25 @@ const Detail = () => {
                     })
                 }
             </ul>
-            <p>{game.description}</p>
-            <p>{game.released}</p>
-            <p>{game.rating}</p>
+            <section className={styles.description}>
+                <p>{game.description}</p>
+            </section>
+            <p>Fecha de lanzamiento: {game.released}</p>
+
+            <p className={styles.rating}>{game.rating}&#11088;</p>
+
+            <div className={styles.genres}>
                 <h4>Géneros:</h4>
-            <ul>
-                {
-                    game.genres.map((genre, index) => {
-                        return(
-                            <li key={index}>{genre.name}</li>
-                        )
-                    })
-                }
-            </ul>
+                <ul>
+                    {
+                        game.genres.map((genre, index) => {
+                            return(
+                                <li key={index}>{genre.name}</li>
+                            )
+                        })
+                    }
+                </ul>
+            </div>
 
             <button><NavLink to='/home'>Volver</NavLink></button>
         </div>

@@ -1,7 +1,18 @@
-.img {
-    width: 50px;
+.card {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
 }
-.container {
-    margin:  2px;
-    padding: 5px;
+.cardGenres {
+    list-style: none;
+    padding: 0;
+}
+.CardGenre {
+    margin: 5px 0;
+}
+.img {
+    width: 100vh;
 }
