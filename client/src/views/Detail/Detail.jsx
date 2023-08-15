@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { NavLink } from 'react-router-dom'
-
+//? import { cleanDetail } from '../../redux/actions'
 import axios from "axios";
+import styles from './Detail.module.css';
 
 
 const Detail = () => {
@@ -24,16 +25,20 @@ const Detail = () => {
     };
 
     useEffect(() => {
-        bringGame()
+        bringGame();
+    //? Por si cambia el dispatch del detail
+        // return () => {
+        //     dispatch(cleanDetail())
+        // }
     })
 
     if(loading === true) return <img src="/loading.gif" alt="loading..." />
 
     return(
-        <div>
+        <div className={styles.container}>
             <span>{game.id}</span>
             <h2>{game.name}</h2>
-            <img src={game.image} alt={game.name} />
+            <img src={game.image} alt={game.name} className={styles.img}/>
 
             <ul>
                 <h4>Plataformas:</h4>

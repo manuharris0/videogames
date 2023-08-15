@@ -6,18 +6,15 @@ const { Op } = require('sequelize');
 require('dotenv').config();
 const { API_KEY } = process.env;
 
-
 class videogamesService {
     
-    constructor() {
-
-    };
+    constructor() {};
 
     async findAll() {
         try {
             const { data } = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
 
-            const videogames = data.results.map(({ id, name, background_image, genres}) => {
+            const videogames = data.results.map(({ id, name, background_image, genres, rating}) => {
 
                 const genresArray = genres.map(genre => {
                     return {
@@ -28,16 +25,16 @@ class videogamesService {
                     id,
                     name,
                     image: background_image,
-                    genresArray
+                    genresArray,
+                    rating
                 };
             });
 
             const dbVideogames = await Videogame.findAll({
-                attributes: ['id', 'name', 'image'],
+                attributes: ['id', 'name', 'image', 'rating'],
                 include: {
                     model: Genre,
                     attributes: ['name'],
-// Arreglar para que el array de generos se muestre igual si es de la base de datos o la api
                     through: {
                         attributes: []
                     }
@@ -130,6 +127,10 @@ class videogamesService {
     };
 
     async create({name, description, platforms, image, released, rating, genres}) {
+        
+        const match = await Videogame.findOne({ where: {name: name} })
+        if(match) throw new Error('ya existe un videojuego con ese nombre')
+        
         try {
             const newVideogame = await Videogame.create({
                 name,

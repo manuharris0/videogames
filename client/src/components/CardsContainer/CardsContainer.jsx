@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Card } from "../Card/Card";
 import { NavLink } from "react-router-dom";
+import styles from './CardsContainer.module.css';
 
 export const CardsContainer = () => {
 
@@ -9,18 +10,17 @@ export const CardsContainer = () => {
     
     
     return(
-        <div>
+        <div className={styles.container}>
             {
                 error ? (
                     <div>
                         <p>{error}</p>
-                        <h4>puedes crearlo <NavLink to='/form'>aqui</NavLink></h4>
+                        <h4>puedes crearlo <NavLink to='/form'>AQUÍ</NavLink></h4>
                     </div>
                 ) : (
-                
                     videogames.map(game => {
                         return(
-                            <Card 
+                            <Card
                                 key={game?.id}
                                 id={game?.id}
                                 image={game?.image}
@@ -30,7 +30,7 @@ export const CardsContainer = () => {
                         );
                     })
                 )
-            };
+            }
         </div>
     );
 };

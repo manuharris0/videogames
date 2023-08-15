@@ -30,10 +30,10 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     rating: {
-      type: DataTypes.DECIMAL(2, 1),
+      type: DataTypes.DECIMAL(3, 2),
       validate: {
         min: 0,
-        max: 10
+        max: 5
       }
     }
   },

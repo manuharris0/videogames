@@ -1,3 +1,7 @@
 .img {
     width: 50px;
 }
+.container {
+    margin:  2px;
+    padding: 5px;
+}

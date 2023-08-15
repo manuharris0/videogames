@@ -3,14 +3,10 @@ import styles from './Card.module.css';
 
 export const Card = ({ image, name, genres, id}) => {
     return(
-        <div>
-
-            <img src={image} alt={name} className={styles.img}/>
-
+        <div className={styles.container}>
             <NavLink to={`/detail/${id}`}>
-                {name}
-            </NavLink>
-
+                <img src={image} alt={name} className={styles.img}/>
+                <h3>{name}</h3>
                 <ul>
                     {
                         genres?.map((genre, index) => {
@@ -20,6 +16,7 @@ export const Card = ({ image, name, genres, id}) => {
                         })
                     }
                 </ul>
+            </NavLink>
         </div>
     )
 };

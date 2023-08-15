@@ -1,0 +1,11 @@
+.container {
+    padding: 2%;
+    display: grid;
+    place-items: center;
+}
+
+.img {
+    display: flex;
+    border: 2px solid black;
+    width: 600px;
+}

@@ -1,18 +1,10 @@
-import axios from 'axios'
 import { useState } from "react";
-import validation from './validation';
-import Genres from './genres';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import axios from 'axios'
+import validation from './validation';
 
 const Form = () => {
-
-    //! HARDCODEO:
-    const generos = [
-        {id: 4, name:'Action'},
-        {id: 51, name:'Indie'},
-        {id: 3, name:'Adventure'},
-        {id: 5, name:'RPG'}
-    ];
 
     const [videogame, setVideogame] = useState({
         name: '',
@@ -23,14 +15,47 @@ const Form = () => {
         rating: '',
         genres: [],
         message: '',
-    })
-
+    });
     const [errors, setErrors] = useState({});
 
+    const genres = useSelector(state => state.genres)
+
     const handleSubmit = async (event) => {
-        event.preventDefault()
-        const response = await axios.post('http://localhost:3001/videogames')
-        console.log(response.data);
+        event.preventDefault();
+        
+        try {
+            const { name, description, platforms, image, released, rating, genres } = videogame;
+            const response = await axios.post('http://localhost:3001/videogames', {
+            name,
+            description,
+            platforms,
+            image,
+            released,
+            rating,
+            genres
+        });
+        setVideogame({
+            name: '',
+            image: '',
+            description: '',
+            platforms: [],
+            released: '',
+            rating: '',
+            genres: [],
+            message: '',
+        })
+        console.log(response);    
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
+
+    const platformsChange = (event) => {
+        const platforms = event.target.value.split(',')
+        setVideogame({
+            ...videogame,
+            platforms: platforms
+        })
     };
 
     const handleChange = (event) => {
@@ -42,6 +67,24 @@ const Form = () => {
             ...videogame,
             [event.target.name]: event.target.value
         }))
+    };
+
+    const handleCheck = (event) => {
+        const { checked, value } = event.target;
+        if(checked) {
+            setVideogame({
+                ...videogame,
+                genres: [...videogame.genres, Number(value)]
+            });
+        } else if(!checked) {
+            const index = videogame.genres.indexOf(Number(value));
+            videogame.genres.splice(index, 1);
+            setVideogame({
+                ...videogame,
+                genres: videogame.genres
+            });
+            //! Falta destildar los checkbox al hacer submit
+        }
     };
 
     return(
@@ -87,19 +130,22 @@ const Form = () => {
                 <input
                     name='platforms'
                     value={videogame.platforms}
-                    onChange={handleChange}
-                    placeholder="agregue la/s plataforma/s (peradas por comas)"
+                    onChange={platformsChange}
+                    placeholder="Separadas por comas"
                     type="text"
-                />
+                /> <br />
 
                 <label>Fecha de lanzamiento:</label>
                 <input
                     name='released'
                     value={videogame.released}
                     onChange={handleChange}
-                    placeholder="Fecha de lanzamiento"
-                    type="date"
-                />
+                    placeholder="DD-MM-AA"
+                    type="text"
+                /> <br />
+                {
+                    errors.released ? <span>{errors.released}</span> : null
+                } <br />
 
                 <label>Rating</label>
                 <input
@@ -113,18 +159,24 @@ const Form = () => {
                     errors.rating ? <span>{errors.rating}</span> : null
                 } <br />
 
-                {/* <label>Géneros</label>
-                <input
-                    name='genres'
-                    value={videogame.genres}
-                    onChange={handleChange}
-                    placeholder="Géneros..."
-                    type="text"
-                /> */}
                 <label>GENEROS:</label>
-                <Genres generos={generos} />
-                {/* definir el formato del input generos */}
-                input
+                {
+                    genres.map((gen, index )=> {
+                        return(
+                            <section key={index}>
+                            <label key={index}>{gen.name}</label>
+                            <input
+                                id={gen.id}
+                                key={gen.id}
+                                value={gen.id}
+                                name={gen.name}
+                                onChange={handleCheck}
+                                type="checkbox"
+                            />
+                            </section>
+                        )           
+                    })
+                }
 
                 {
                     errors.message
@@ -137,6 +189,7 @@ const Form = () => {
             <button><NavLink to='/home'>VOLVER</NavLink></button>
         </div>
     )
-};
+}
+
 
 export default Form;
