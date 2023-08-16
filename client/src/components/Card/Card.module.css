@@ -1,18 +1,33 @@
 .card {
-    background-color: #f7f7f7;
+    background-color: #c7a2a287;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin: 10px;
     padding: 10px;
     text-align: center;
 }
+.cardLink {
+    text-decoration: none;
+}
+.cardTitle {
+    font-size: 18px;
+    color: black;
+    font-size: 1.5em;
+}
 .cardGenres {
     list-style: none;
     padding: 0;
 }
-.CardGenre {
-    margin: 5px 0;
+.cardGenre {
+    margin: 1px 0;
+    font-size: 1em;
+    color: black;
 }
-.img {
-    width: 100vh;
+.cardImage {
+    width: 20vh;
+    border: 1px solid black;
+}
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
 }

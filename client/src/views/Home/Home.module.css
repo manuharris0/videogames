@@ -24,5 +24,24 @@ form {
     padding: 20px;
     background-color: aqua;
 }
-
+.containerError {
+    background-image: url(https://c4.wallpaperflare.com/wallpaper/963/51/784/game-over-video-games-glitch-art-wallpaper-preview.jpg);
+}
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.buttonLink {
+    text-align: center;
+}
+.button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8%;
+}
   

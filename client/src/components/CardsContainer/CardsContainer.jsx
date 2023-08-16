@@ -25,6 +25,7 @@ export const CardsContainer = () => {
                                 image={game?.image}
                                 name={game?.name}
                                 genres={!game.genres? game.genresArray : game?.genres}
+                                className={styles['card-in-container']}
                             />
                         );
                     })

@@ -1,23 +1,24 @@
+import axios from 'axios'
 import { useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import axios from 'axios'
 import validation from './validation';
+import styles from './Form.module.css';
 
 const Form = () => {
-
+    // Objeto que se envía al .post()
     const [videogame, setVideogame] = useState({
         name: '',
         image: '',
         description: '',
-        platforms: [],
+        platforms: '',
         released: '',
         rating: '',
         genres: [],
-        message: '',
+        message: 'Todos los campos son obligatorios'
     });
-    const [errors, setErrors] = useState({});
 
+    const [errors, setErrors] = useState({});
     const genres = useSelector(state => state.genres)
 
     const handleSubmit = async (event) => {
@@ -42,27 +43,39 @@ const Form = () => {
             released: '',
             rating: '',
             genres: [],
-            message: '',
+            message: 'Videojuego creado con éxito',
         })
-        console.log(response);    
+        console.log(response);
         } catch (error) {
-            console.log(error.response);
+            setErrors({
+                message: error.response.data
+            })
+            console.log(error);
         }
     };
 
     const platformsChange = (event) => {
+        // función que guarda las plataformas en un array
         const platforms = event.target.value.split(',')
         setVideogame({
             ...videogame,
-            platforms: platforms
+            platforms: platforms,
+            message: ''
         })
+        setErrors(validation({
+            ...videogame,
+            platforms: platforms
+        }))
     };
 
     const handleChange = (event) => {
+        // Función que setea el estado local
         setVideogame({
             ...videogame,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            message: ''
         });
+        // Validaciones
         setErrors(validation({
             ...videogame,
             [event.target.name]: event.target.value
@@ -70,18 +83,21 @@ const Form = () => {
     };
 
     const handleCheck = (event) => {
+        // Función que agrega y quita géneros del estado
         const { checked, value } = event.target;
         if(checked) {
             setVideogame({
                 ...videogame,
-                genres: [...videogame.genres, Number(value)]
+                genres: [...videogame.genres, Number(value)],
+                message: ''
             });
         } else if(!checked) {
             const index = videogame.genres.indexOf(Number(value));
             videogame.genres.splice(index, 1);
             setVideogame({
                 ...videogame,
-                genres: videogame.genres
+                genres: videogame.genres,
+                message: ''
             });
             //! Falta destildar los checkbox al hacer submit
         }
@@ -90,6 +106,11 @@ const Form = () => {
     return(
         <div>
             <form onSubmit={handleSubmit}>
+
+                <NavLink to='/home' className={styles.buttonLink}>
+                    <button className={styles.button}>VOLVER</button>
+                </NavLink>
+
                 <label>Nombre:</label>
                 <input
                     name='name'
@@ -98,9 +119,8 @@ const Form = () => {
                     placeholder="Ingrese el nombre del videojuego"
                     type="text"
                 /> <br />
-                {
-                    errors.name ? <span>{errors.name}</span> : null
-                } <br />
+                { errors.name ? <span>{errors.name}</span> : null }
+                <br />
 
                 <label>Imagen:</label>
                 <input 
@@ -177,16 +197,15 @@ const Form = () => {
                         )           
                     })
                 }
-
                 {
-                    errors.message
-                    ? <span>{errors.message}</span>
+                    errors.message || errors.name || errors.image || errors.description || errors.platforms || errors.released || errors.rating || errors.genres || videogame.message || videogame.genres.length < 1
+                    ? <span className={styles.error}>{errors.message}</span>
                     : <input type="submit" />
                 }
-                
-
+                {
+                    videogame.message ? <span>{videogame.message}</span> : null
+                }
             </form>
-            <button><NavLink to='/home'>VOLVER</NavLink></button>
         </div>
     )
 }

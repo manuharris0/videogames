@@ -1,6 +1,19 @@
 .container {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
     margin: 20px 0;
+}
+.card-in-container {
+    flex-basis: calc(20% - 20px);
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+.card-in-container:hover {
+    transform: scale(1.05);
 }

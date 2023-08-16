@@ -101,8 +101,7 @@ class videogamesService {
                     [Op.iLike]: `%${name}%`
                 }
             },
-            attributes: ['id', 'name', 'image']
-            // Falta tarer los géneros desde la bdd
+            attributes: ['id', 'name', 'image', 'rating']
         });
 
         videogames.map(game => matchedVideogames.push(game));
@@ -114,7 +113,8 @@ class videogamesService {
                     id: game.id,
                     name: game.name,
                     image: game.background_image,
-                    genres: game.genres
+                    genres: game.genres,
+                    rating: game.rating
                 }
             ))
 

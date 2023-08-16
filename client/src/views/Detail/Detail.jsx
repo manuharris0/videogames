@@ -67,7 +67,9 @@ const Detail = () => {
                 </ul>
             </div>
 
-            <button><NavLink to='/home'>Volver</NavLink></button>
+            <NavLink to='/home' className={styles.buttonLink}>
+                <button className={styles.button}>VOLVER</button>
+            </NavLink>
         </div>
     )
 };

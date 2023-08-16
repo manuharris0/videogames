@@ -8,8 +8,6 @@ export const FILTER_BY_ORIGIN = 'FILTER_BY_ORIGIN';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_RATING = 'ORDER_BY_RATING';
 export const ERROR = 'ERROR';
-//? export const CLEAN_DETAIL = 'CLEAN_DETAIL';
-
 
 export const getVideogames = () => {
     return async function(dispatch) {
@@ -21,7 +19,6 @@ export const getVideogames = () => {
         }
     }
 };
-
 export const getVideogameByName = (name) => {
     return async function(dispatch) {
         try {
@@ -32,40 +29,33 @@ export const getVideogameByName = (name) => {
         }
     }
 };
-
-//? Por si el detail se llega a guardar en un futuro en el estado global
-// export const cleanDetail = () => {
-//     return function(dispatch) {
-//         dispatch({ type: CLEAN_DETAIL })
-//     }
-// };
-
 export const getGenres = (data) => {
     return function(dispatch) {
         dispatch({ type: GET_GENRES, payload: data })
     }
 };
-
 export const filterByGenre = (genre) => {
     return function(dispatch){
         dispatch({ type: FILTER_BY_GENRE, payload: genre })
     }
 };
-
 export const filterByOrigin = (dataType) => {
     return function(dispatch) {
         dispatch({ type: FILTER_BY_ORIGIN, payload: dataType })
     }
 };
-
 export const orderByName = (order) => {
     return function(dispatch) {
         dispatch({ type: ORDER_BY_NAME, payload: order })
     }
 };
-
 export const orderByRating = (order) => {
     return function(dispatch) {
         dispatch({ type: ORDER_BY_RATING, payload: order })
     }
 };
+export const cleanError = () => {
+    return function(dispatch) {
+        dispatch({type: ERROR})
+    }
+}

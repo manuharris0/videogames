@@ -1,6 +1,8 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVideogames, getVideogameByName, filterByOrigin, orderByName, orderByRating, filterByGenre } from '../../redux/actions';
+import { getVideogames, getVideogameByName, filterByOrigin, orderByName, orderByRating, filterByGenre, getGenres, cleanError } from '../../redux/actions';
 import { CardsContainer } from "../../components/CardsContainer/CardsContainer";
 import styles from './Home.module.css';
 
@@ -8,21 +10,35 @@ export const Home = () => {
 
     const dispatch = useDispatch();
     const [name, setName] = useState('')
-    
+    const [loading, setLoading] = useState(true);
+
     const genres = useSelector(state => state.genres)
     const videogames = useSelector(state => state.videogames)
     
     useEffect(() => {
-        dispatch(getVideogames());
+        if(videogames.length < 1) dispatch(getVideogames());
+        dispatch(cleanError())
+        async function fetchData(dispatch) {
+            try {
+                const { data } = await axios.get('http://localhost:3001/genres');
+                    dispatch(getGenres(data));
+                    setLoading(false)
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            fetchData(dispatch)
     }, [dispatch]);
-    
-    if(videogames.length < 1) return <img className={styles.loadingImg} src='https://thumbs.gfycat.com/LittleBestAmoeba-size_restricted.gif' alt="loading..." />
+
 
     const handleChange = (event) => {
         setName(event.target.value)
     };
     const handleSubmit = (event) => {
         event.preventDefault();
+        if(name === '') {
+            dispatch(getVideogames())
+        }
         dispatch(getVideogameByName(name));
         setName('')
     };
@@ -38,6 +54,18 @@ export const Home = () => {
     const handleOrderByRating = (event) => {
         dispatch(orderByRating(event.target.value))
     };
+
+    if(loading) return <img className={styles.loadingImg} src='https://thumbs.gfycat.com/LittleBestAmoeba-size_restricted.gif' alt="loading..." />
+    else if(videogames.length < 1) {
+        return(
+            <div className={styles.error}>
+                <h4>No se encontraron coincidencias.</h4>
+                <NavLink to='/form' className={styles.buttonLink}>
+                    <button className={styles.button}>CREAR JUEGO</button>
+                </NavLink>
+            </div>
+        )    
+    }
 
     return(
         <div className={styles.container}>
@@ -87,7 +115,9 @@ export const Home = () => {
                     <option value='string'>Base de datos</option>
                 </select>
                 {/* Solo falta mensaje adecuado cuando el filtro no encuentra coincidencias */}
+                <h4><span>Crea tu juego <NavLink to='/form'>AQUÍ</NavLink></span></h4>
             </div>
+            
             <CardsContainer />
 
         </div>

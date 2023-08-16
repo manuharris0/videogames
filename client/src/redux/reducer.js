@@ -19,6 +19,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_GENRES:
             return {...state, genres: action.payload};
         case ERROR:
+            if(!action.payload) return {...state, error: null}
             return {...state, error: action.payload};
         case FILTER_BY_GENRE:
             if(action.payload === 'default') {
@@ -46,7 +47,7 @@ const rootReducer = (state = initialState, action) => {
             };
             return {
                 ...state,
-                videogames: state.videogames.filter(game => typeof(game.id) === action.payload)
+                videogames: state.allVideogames.filter(game => typeof(game.id) === action.payload)
             };
         case ORDER_BY_NAME:
             if(action.payload === 'N') {

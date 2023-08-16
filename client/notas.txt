@@ -1,6 +1,7 @@
 Capaz en un futuro el detail no guarde la detalle del juego en un estado local, si no que en una propiedad detail del estado global. Por el momento quedará como estaba
 
-TAREAS A REVISAR:
+Bugs a arreglar:
+    
 
 
 
