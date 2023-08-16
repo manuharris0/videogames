@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { ERROR } from "../../redux/actions";
 import styles from './Detail.module.css';
-
 const Detail = () => {
 
     const { id } = useParams()
+    const dispatch = useDispatch()
 
     const [game, setGame] = useState({})
     const [loading, setLoading] = useState(true)
@@ -18,7 +20,7 @@ const Detail = () => {
             setGame(data)
             setLoading(false)
         } catch (error) {
-            console.log(error);
+            dispatch({ type: ERROR, payload: error.message })
         }
     };
 

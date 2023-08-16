@@ -39,7 +39,7 @@ class videogamesService {
                     })
                     page++
                 } catch (error) {
-                    console.log(error);
+                    throw new Error(error.message)
                 }
             };
             const dbVideogames = await Videogame.findAll({
@@ -69,7 +69,6 @@ class videogamesService {
                     name: genre.name
                 }
             })
-
             const videogameDetail = {
                 id: data.id,
                 name: data.name,
@@ -81,7 +80,6 @@ class videogamesService {
                 genres,
             }
             return videogameDetail;
-            
         } catch (error) {
             throw new Error(`No se econtró videojuego con ID: ${id}`)
         }
@@ -163,7 +161,6 @@ class videogamesService {
             };
         } catch (error) {
             throw new Error({err: error.message})
-            // Falta envíar error cuando no se cumplen las condiciones para la base de datos
         }
     };
 };

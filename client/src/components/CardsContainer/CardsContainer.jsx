@@ -1,11 +1,10 @@
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import  Card  from "../Card/Card";
-import { NavLink } from "react-router-dom";
 import styles from './CardsContainer.module.css';
 
 export const CardsContainer = ({ games }) => {
 
-    const videogames = useSelector(state => state.videogames);
     const error = useSelector(state => state.error);
     
     return(

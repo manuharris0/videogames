@@ -10,13 +10,16 @@ class genresService {
     constructor() {};
 
     async find() {
-        const genres = await Genre.findAll();
-        return genres;
+        try {
+            const genres = await Genre.findAll();
+            return genres;
+        } catch (error) {
+            throw new Error(error.message)
+        }
     };
 
     async generate() {
         try {
-
             const { data } = await axios.get(`https://api.rawg.io/api/genres?key=${API_KEY}`);
             const genres = data.results.map(result => {
                 return {
@@ -26,7 +29,6 @@ class genresService {
             })
             await Genre.bulkCreate(genres);
             return this.find();
-
         } catch (error) {
             throw new Error(error.message)
         }

@@ -1,14 +1,14 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVideogames, getVideogameByName, filterByOrigin, orderByName, orderByRating, filterByGenre, getGenres, cleanError, defaultValues } from '../../redux/actions';
+import { getVideogames, getVideogameByName, filterByOrigin, orderByName, orderByRating, filterByGenre, cleanError, defaultValues, getGenres } from '../../redux/actions';
 import { CardsContainer } from "../../components/CardsContainer/CardsContainer";
 import styles from './Home.module.css';
 
 export const Home = () => {
 
     const dispatch = useDispatch();
+    
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,9 +19,10 @@ export const Home = () => {
     
     useEffect(() => {
         if(videogames.length < 1) dispatch(getVideogames());
-        dispatch(cleanError())
-        setLoading(false)
-    }, [dispatch]);
+        if(genres.length < 1) dispatch(getGenres());
+        dispatch(cleanError());
+        setLoading(false);
+    }, [videogames.length, dispatch]);
 
 
     const handleChange = (event) => {

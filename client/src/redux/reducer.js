@@ -79,7 +79,7 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 videogames: state.allVideogames
-            }
+            };
         default:
             return {...state};
     };

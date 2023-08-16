@@ -48,7 +48,6 @@ const Form = () => {
             setErrors({
                 message: error.response.data
             })
-            console.log(error.response.data)
         }
     };
 
@@ -112,7 +111,7 @@ const Form = () => {
                     name='name'
                     value={videogame.name}
                     onChange={handleChange}
-                    placeholder="Ingrese el nombre del videojuego"
+                    placeholder="Ingrese el nombre"
                     type="text"
                 />
                 { errors.name ? <span>{errors.name}</span> : null }
@@ -122,7 +121,7 @@ const Form = () => {
                     name='image'
                     value={videogame.image}
                     onChange={handleChange}
-                    placeholder="pegue el link de la imagen"
+                    placeholder="Pegue el link de la imagen"
                     type="text"
                 />
 
@@ -153,7 +152,7 @@ const Form = () => {
                     name='released'
                     value={videogame.released}
                     onChange={handleChange}
-                    placeholder="DD-MM-AA"
+                    placeholder="DD-MM-AAAA"
                     type="text"
                 />
 
@@ -164,7 +163,7 @@ const Form = () => {
                     name='rating'
                     value={videogame.rating}
                     onChange={handleChange}
-                    placeholder="rating..."
+                    placeholder="Valore el juego"
                     type="text"
                 />
 
@@ -201,5 +200,4 @@ const Form = () => {
         </div>
     )
 }
-
 export default Form;

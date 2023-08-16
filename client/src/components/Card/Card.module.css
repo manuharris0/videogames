@@ -1,18 +1,17 @@
 .card {
-    background-color: #c7a2a287;
-    border: 1px solid #ddd;
-    border-radius: 5px;
     margin: 10px;
     padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #c7a2a287;
+    border-radius: 5px;
     text-align: center;
 }
 .cardLink {
     text-decoration: none;
 }
 .cardTitle {
-    font-size: 18px;
-    color: black;
     font-size: 1.5em;
+    color: black;
 }
 .cardGenres {
     list-style: none;

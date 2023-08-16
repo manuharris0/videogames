@@ -1,9 +1,9 @@
-import { NavLink } from 'react-router-dom';
-import styles from './Landing.module.css';
-import { useEffect } from 'react';
-import { getGenres, getVideogames } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getGenres, getVideogames } from '../../redux/actions';
+import styles from './Landing.module.css';
 
 export const Landing = () => {
 

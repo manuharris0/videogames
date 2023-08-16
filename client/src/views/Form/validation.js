@@ -1,5 +1,4 @@
 const validation = (data) => {
-    // debo retornar un objeto donde cada propiedad tenga o no un valor de tipo string diciendome el error
 
     const imageRegex = new RegExp(/\.(jpeg|jpg|gif|png|bmp|webp)$/i);
     const descriptionRegex = new RegExp(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.,\s]*$/);
@@ -17,8 +16,6 @@ const validation = (data) => {
     if(!imageRegex.test(data.image)) invalid.image = 'Debe ser un link de imagen válido';
     //! description validator:
     if(!descriptionRegex.test(data.description)) invalid.description = 'No se permiten caracteres especiales';
-    //! platforms validator:
-    // Por el momento no se necesita validar
     //! date validator:
     if(!dateRegex.test(data.released)) invalid.released = "Debe ser un formato válido: Día-Mes-Año";
     //! rating validator:
