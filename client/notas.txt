@@ -1,7 +1,8 @@
 Capaz en un futuro el detail no guarde la detalle del juego en un estado local, si no que en una propiedad detail del estado global. Por el momento quedará como estaba
 
 Bugs a arreglar:
-    
+    cuando esta cargando el home, no se está mostrando el loading sino para crear juegos
+    cuando filtro para api despues de base de datos, no encuentr
 
 
 

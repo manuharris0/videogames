@@ -3,7 +3,7 @@ import  Card  from "../Card/Card";
 import { NavLink } from "react-router-dom";
 import styles from './CardsContainer.module.css';
 
-export const CardsContainer = () => {
+export const CardsContainer = ({ games }) => {
 
     const videogames = useSelector(state => state.videogames);
     const error = useSelector(state => state.error);
@@ -17,7 +17,7 @@ export const CardsContainer = () => {
                         <h4>puedes crearlo <NavLink to='/form'>AQUÍ</NavLink></h4>
                     </div>
                 ) : (
-                    videogames.map(game => {
+                    games.map(game => {
                         return(
                             <Card
                                 key={game?.id}

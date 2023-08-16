@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVideogames, getVideogameByName, filterByOrigin, orderByName, orderByRating, filterByGenre, getGenres, cleanError } from '../../redux/actions';
+import { getVideogames, getVideogameByName, filterByOrigin, orderByName, orderByRating, filterByGenre, getGenres, cleanError, defaultValues } from '../../redux/actions';
 import { CardsContainer } from "../../components/CardsContainer/CardsContainer";
 import styles from './Home.module.css';
 
@@ -11,23 +11,16 @@ export const Home = () => {
     const dispatch = useDispatch();
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const gamesPerPag = 15;
 
     const genres = useSelector(state => state.genres)
-    const videogames = useSelector(state => state.videogames)
+    const videogames = useSelector(state => state.videogames);
     
     useEffect(() => {
         if(videogames.length < 1) dispatch(getVideogames());
         dispatch(cleanError())
-        async function fetchData(dispatch) {
-            try {
-                const { data } = await axios.get('http://localhost:3001/genres');
-                    dispatch(getGenres(data));
-                    setLoading(false)
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-            fetchData(dispatch)
+        setLoading(false)
     }, [dispatch]);
 
 
@@ -43,10 +36,19 @@ export const Home = () => {
         setName('')
     };
     const handleGenre = (event) => {
-        dispatch(filterByGenre(event.target.value))
+        if(event.target.value) {
+            dispatch(filterByGenre(event.target.value))
+            setCurrentPage(1);
+        }
     };
     const handleOrigin = (event) => {
-        dispatch(filterByOrigin(event.target.value))
+        if(event.target.value) {
+            dispatch(filterByOrigin(event.target.value))
+            setCurrentPage(1)
+        }
+    };
+    const handleDefault = () => {
+        dispatch(defaultValues())
     };
     const handleOrderByName = (event) => {
         dispatch(orderByName(event.target.value))
@@ -54,8 +56,18 @@ export const Home = () => {
     const handleOrderByRating = (event) => {
         dispatch(orderByRating(event.target.value))
     };
+    const hanldePrev = () => {
+        setCurrentPage(currentPage -1)
+    };
+    const hanldeNext = () => {
+        setCurrentPage(currentPage +1)
+    };
 
-    if(loading) return <img className={styles.loadingImg} src='https://thumbs.gfycat.com/LittleBestAmoeba-size_restricted.gif' alt="loading..." />
+    if(loading) return(
+        <div className={styles.loadingContainer}>
+            <img className={styles.loadingImg} src='https://thumbs.gfycat.com/LittleBestAmoeba-size_restricted.gif' alt="loading..." />
+        </div>
+    )
     else if(videogames.length < 1) {
         return(
             <div className={styles.error}>
@@ -63,6 +75,10 @@ export const Home = () => {
                 <NavLink to='/form' className={styles.buttonLink}>
                     <button className={styles.button}>CREAR JUEGO</button>
                 </NavLink>
+                <div className={styles.errorContainer}>
+                    <h3>O, espera a que carguen los videojuegos</h3>
+                    <img className={styles.loadingImg} src='https://thumbs.gfycat.com/LittleBestAmoeba-size_restricted.gif' alt="loading..." />
+                </div>
             </div>
         )    
     }
@@ -71,7 +87,7 @@ export const Home = () => {
         <div className={styles.container}>
 
             <header>
-                <form onSubmit={handleSubmit}>
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <input type="text"
                         placeholder="Buscar por nombre"
                         value={name}
@@ -98,7 +114,7 @@ export const Home = () => {
 
                 <span>Filtrar por género: </span>
                 <select onChange={handleGenre}>
-                    <option value='default'>Todos</option>
+                    <option></option>
                     {
                         genres.map((genre) => {
                             return(
@@ -110,16 +126,31 @@ export const Home = () => {
 
                 <span>Filtrar por Origen: </span>
                 <select onChange={handleOrigin}>
-                    <option value='default'>Todos</option>
+                    <option></option>
                     <option value='number'>API</option>
                     <option value='string'>Base de datos</option>
                 </select>
-                {/* Solo falta mensaje adecuado cuando el filtro no encuentra coincidencias */}
+
+                <button className={styles.defaultButton} onClick={handleDefault}>RESTABLECER</button>
+
                 <h4><span>Crea tu juego <NavLink to='/form'>AQUÍ</NavLink></span></h4>
             </div>
             
-            <CardsContainer />
+            <CardsContainer 
+                games={videogames.slice((currentPage - 1) * gamesPerPag, currentPage * gamesPerPag)}
+            />
 
+            <footer className={styles.footer}>
+                    <button
+                        onClick={hanldePrev}
+                        disabled={currentPage === 1}
+                    >ANTERIOR</button>
+                    <span>Página {currentPage}</span>
+                    <button
+                        onClick={hanldeNext}
+                        disabled={currentPage === Math.ceil(videogames.length / gamesPerPag)}
+                    >SIGUIENTE</button>
+            </footer>
         </div>
     )
 };

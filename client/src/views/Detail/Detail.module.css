@@ -1,3 +1,11 @@
+.loadingImg {
+    width: 100vx;
+    height: 100vh;
+}
+.loadingContainer {
+    width: 100vx;
+    height: 100vh;
+}
 .container {
   background-color: #f7f7f7;
   border: 1px solid #ddd;

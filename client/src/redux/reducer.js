@@ -1,4 +1,4 @@
-import { GET_VIDEOGAMES, GET_VIDEOGAME_BY_NAME, ERROR, GET_GENRES, FILTER_BY_GENRE, FILTER_BY_ORIGIN, ORDER_BY_NAME, ORDER_BY_RATING } from "./actions";
+import { GET_VIDEOGAMES, GET_VIDEOGAME_BY_NAME, ERROR, GET_GENRES, FILTER_BY_GENRE, FILTER_BY_ORIGIN, ORDER_BY_NAME, ORDER_BY_RATING, DEFAULT_VALUES } from "./actions";
 
 const initialState = {
     videogames: [],
@@ -22,12 +22,6 @@ const rootReducer = (state = initialState, action) => {
             if(!action.payload) return {...state, error: null}
             return {...state, error: action.payload};
         case FILTER_BY_GENRE:
-            if(action.payload === 'default') {
-                return {
-                    ...state,
-                    videogames: state.allVideogames
-                }
-            };
             return {
                 ...state,
                 videogames: state.videogames.filter(game => {
@@ -35,16 +29,10 @@ const rootReducer = (state = initialState, action) => {
                         return game.genresArray.some(genre => genre.name === action.payload)
                     } else {
                         return game.genres.some(genre => genre.name === action.payload)
-                    }
+                    } 
                 })
             };
         case FILTER_BY_ORIGIN:
-            if(action.payload === 'default') {
-                return {
-                    ...state,
-                    videogames: state.allVideogames
-                };
-            };
             return {
                 ...state,
                 videogames: state.allVideogames.filter(game => typeof(game.id) === action.payload)
@@ -87,6 +75,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 videogames: sorterRatings
             };
+        case DEFAULT_VALUES:
+            return {
+                ...state,
+                videogames: state.allVideogames
+            }
         default:
             return {...state};
     };

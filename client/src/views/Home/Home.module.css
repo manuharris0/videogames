@@ -2,6 +2,16 @@
     width: 100vx;
     height: 100vh;
 }
+.loadingContainer {
+    width: 100vx;
+    height: 100vh;
+}
+.errorContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 .filters {
     margin: 5px;
     padding: 20px;
@@ -22,16 +32,22 @@ form {
     align-items: center;
     margin: 5px;
     padding: 20px;
-    background-color: aqua;
-}
-.containerError {
-    background-image: url(https://c4.wallpaperflare.com/wallpaper/963/51/784/game-over-video-games-glitch-art-wallpaper-preview.jpg);
+    background-color: rgba(0,0,0,0.2);
 }
 .error {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.defaultButton {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8%;
 }
 .buttonLink {
     text-align: center;

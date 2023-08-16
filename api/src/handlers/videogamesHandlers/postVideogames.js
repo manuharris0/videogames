@@ -6,7 +6,7 @@ const postVideogame = async (req, res) => {
 
         const { name, description, platforms, image, released, rating, genres } = req.body
 
-        if(!name || !description || !platforms || !image || !released || !rating || !genres) {
+        if(!name || !description || !platforms || platforms.length < 1 || !image || !released || !rating || !genres || genres.length < 1) {
             throw new Error('Falta información para guardar el juego en la base de datos')
         }
 

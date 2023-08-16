@@ -26,7 +26,11 @@ const Detail = () => {
         bringGame();
     })
 
-    if(loading === true) return <img src="/loading.gif" alt="loading..." />
+    if(loading) return(
+        <div className={styles.loadingContainer}>
+            <img className={styles.loadingImg} src='https://thumbs.gfycat.com/LittleBestAmoeba-size_restricted.gif' alt="loading..." />
+        </div>
+    )
 
     return(
         <div className={styles.container}>

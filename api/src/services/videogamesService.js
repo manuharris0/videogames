@@ -12,24 +12,36 @@ class videogamesService {
 
     async findAll() {
         try {
-            const { data } = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
-
-            const videogames = data.results.map(({ id, name, background_image, genres, rating}) => {
-
-                const genresArray = genres.map(genre => {
-                    return {
-                        name: genre.name
-                    }
-                })
-                return {
-                    id,
-                    name,
-                    image: background_image,
-                    genresArray,
-                    rating
-                };
-            });
-
+            let page = 1
+            let allVideogames = []
+            while (page <= 5) {
+                try {
+                    const { data } = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${page}`);
+            
+                    const videogames = data.results.map(({ id, name, background_image, genres, rating}) => {
+            
+                        const genresArray = genres.map(genre => {
+                            return {
+                                id: genre.id,
+                                name: genre.name
+                            }
+                        })
+                        return {
+                            id,
+                            name,
+                            image: background_image,
+                            rating,
+                            genresArray
+                        };
+                    });
+                    videogames.map(game => {
+                        allVideogames.push(game)
+                    })
+                    page++
+                } catch (error) {
+                    console.log(error);
+                }
+            };
             const dbVideogames = await Videogame.findAll({
                 attributes: ['id', 'name', 'image', 'rating'],
                 include: {
@@ -40,15 +52,15 @@ class videogamesService {
                     }
                 }
             });
-            return videogames.concat(dbVideogames);
+            return allVideogames.concat(dbVideogames);
         } catch (error) {
             throw new Error(error.message)
-        } 
+        }
     };
 
     async apiFind(id) {
         try {
-            const { data } = await axios.get(`https://api.rawg.io/api/games/${id}?key=70fb68c409b1498c9b31df5d9287bb59`);
+            const { data } = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
 
             const platforms = data.platforms.map(plat => plat.platform.name);
             const genres = data.genres.map(genre => {
@@ -107,7 +119,7 @@ class videogamesService {
         videogames.map(game => matchedVideogames.push(game));
 
         try {
-            const { data } = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=70fb68c409b1498c9b31df5d9287bb59`);
+            const { data } = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`);
             data.results.map(game => matchedVideogames.push(
                 {
                     id: game.id,

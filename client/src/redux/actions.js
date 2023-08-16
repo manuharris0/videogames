@@ -7,6 +7,7 @@ export const FILTER_BY_GENRE = 'FILTER_BY_GENRE';
 export const FILTER_BY_ORIGIN = 'FILTER_BY_ORIGIN';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_RATING = 'ORDER_BY_RATING';
+export const DEFAULT_VALUES = 'DEFAULT_VALUES'; 
 export const ERROR = 'ERROR';
 
 export const getVideogames = () => {
@@ -57,5 +58,10 @@ export const orderByRating = (order) => {
 export const cleanError = () => {
     return function(dispatch) {
         dispatch({type: ERROR})
+    }
+};
+export const defaultValues = () => {
+    return function(dispatch) {
+        dispatch({ type: DEFAULT_VALUES })
     }
 }
